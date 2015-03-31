@@ -11,6 +11,7 @@
 ##############################################
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Question 1: ################################
 
@@ -78,25 +79,48 @@ def closest_to_05(array_row):
 	return temp_list.index(min(temp_list))
 
 """Confusion about Question 4 directions -- not sure what we are being asked to do"""
-# def question4():
-# 	grid = np.array([-2,1], [-1.5, 1.5])
+def question4():
 
-# 	N_max = 50
-# 	some_threshold = 50
+	x = np.linspace(-2, 1, 500)
+	y = np.linspace(-1.5, 1.5, 500)
 
-# 	c = x + 1j*y
-# 	z = c
-# 	for v in range(N_max):
-# 		z = z**2 + c
+	final = np.zeros((len(x), len(y)), np.int)
+
+	N_max = 50
+	some_threshold = 10
+
+	for x_item, x0 in enumerate(x):
+		for y_item, y0 in enumerate(y):
+			c = x0 + 1j*y0
+			z = c
+
+			for ind in range(N_max):
+				z = z**2 + c
+
+				if np.absolute(z) > some_threshold:
+					final[x_item, y_item] = ind
+					break
+				else:
+					final[x_item, y_item] = 0
+
+	plt.imshow(final.T, extent=[-2, 1, -1.5, 1.5])
+	plt.gray()
+	plt.show('mandelbrot_lf1414.png')
+	plt.savefig('mandelbrot_lf1414.png')
+
+
 
 # Unit Tests #
 
 if __name__ == "__main__":
-	# Question 1:
+# 	# Question 1:
 	question1()
 
-	# Question 2:
+# 	# Question 2:
 	question2()
 
-	# Question 3:
+# 	# Question 3:
 	question3()
+
+# 	# Question 4:
+	question4()
